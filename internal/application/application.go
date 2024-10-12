@@ -30,9 +30,9 @@ func (app *Application) Run() {
 		os.Exit(1)
 	}
 
-	availableAssistants, err := app.getAvailableAssistant(submissions)
+	availableAssistants, err := app.getAvailableAssistants(submissions)
 	if err != nil {
-		fmt.Println("getAvailableAssistant error:", err)
+		fmt.Println("getAvailableAssistants error:", err)
 		os.Exit(1)
 	}
 
