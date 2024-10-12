@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func (app *Application) getSubmissions() (map[string]interface{}, error) {
+func (app *Application) getSubmissionsJSON() (map[string]interface{}, error) {
 	client := &http.Client{}
 	jsonData := `{}`
 	req, err := http.NewRequest(

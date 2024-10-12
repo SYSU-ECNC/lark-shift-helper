@@ -18,7 +18,7 @@ func NewApplication(cfg *config.Config) *Application {
 }
 
 func (app *Application) Run() {
-	data, err := app.getSubmissions()
+	data, err := app.getSubmissionsJSON()
 	if err != nil {
 		fmt.Println("getSubmissions error:", err)
 		os.Exit(1)
