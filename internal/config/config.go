@@ -1,9 +1,10 @@
 package config
 
 import (
-	"flag"
 	"fmt"
 	"os"
+
+	_ "github.com/joho/godotenv/autoload"
 )
 
 type Config struct {
@@ -16,13 +17,11 @@ func NewConfig() *Config {
 }
 
 func (cfg *Config) Parse() {
-	flag.StringVar(&cfg.APPID, "i", "", "APP ID (required)")
-	flag.StringVar(&cfg.APPSecret, "s", "", "APP Secret (required)")
-	flag.Parse()
+	cfg.APPID = os.Getenv("APP_ID")
+	cfg.APPSecret = os.Getenv("APP_SECRET")
 
 	if cfg.APPID == "" || cfg.APPSecret == "" {
 		fmt.Println("Error: APP ID and APP Secret are required")
-		flag.Usage()
 		os.Exit(1)
 	}
 }
