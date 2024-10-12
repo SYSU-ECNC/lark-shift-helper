@@ -36,5 +36,15 @@ func (app *Application) Run() {
 		os.Exit(1)
 	}
 
-	fmt.Println(availableAssistants)
+	_ = availableAssistants
+
+	users, err := app.getUsersFromSubmissions(submissions)
+	if err != nil {
+		fmt.Println("getUsersFromSubmissions error:", err)
+		os.Exit(1)
+	}
+
+	for _, user := range users {
+		fmt.Println(user)
+	}
 }
