@@ -24,7 +24,7 @@ func (app *Application) Run() {
 		os.Exit(1)
 	}
 
-	submissions, err := convertSubmissionsJSON(data)
+	submissions, err := app.convertSubmissionsJSON(data)
 	if err != nil {
 		fmt.Println("convertSubmissionJSON error:", err)
 		os.Exit(1)

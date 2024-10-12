@@ -54,7 +54,7 @@ func (app *Application) getSubmissionsJSON() (map[string]interface{}, error) {
 	return data, nil
 }
 
-func convertSubmissionsJSON(v map[string]interface{}) ([]*Submission, error) {
+func (app *Application) convertSubmissionsJSON(v map[string]interface{}) ([]*Submission, error) {
 	data, ok := v["data"].(map[string]interface{})
 	if !ok {
 		return nil, fmt.Errorf("data field not found")
@@ -85,7 +85,7 @@ func convertSubmissionsJSON(v map[string]interface{}) ([]*Submission, error) {
 			return nil, fmt.Errorf("fields field not found")
 		}
 
-		submission, err := convertFields2Submission(fields)
+		submission, err := app.convertFields2Submission(fields)
 		if err != nil {
 			return nil, err
 		}
@@ -96,7 +96,7 @@ func convertSubmissionsJSON(v map[string]interface{}) ([]*Submission, error) {
 	return submissions, nil
 }
 
-func convertFields2Submission(fields map[string]interface{}) (*Submission, error) {
+func (app *Application) convertFields2Submission(fields map[string]interface{}) (*Submission, error) {
 	// Get name
 	nameArraySlice, ok := fields["姓名"].([]interface{})
 	if !ok {
@@ -142,6 +142,14 @@ func convertFields2Submission(fields map[string]interface{}) (*Submission, error
 	fridayAvailableTimeSlice, _ := fields["周五空闲时间"].([]interface{})
 	saturdayAvailableTimeSlice, _ := fields["周六空闲时间"].([]interface{})
 
+	convertToStringSlice := func(slice []interface{}) []string {
+		strSlice := make([]string, len(slice))
+		for i, v := range slice {
+			strSlice[i], _ = v.(string)
+		}
+		return strSlice
+	}
+
 	sundayAvailableTime := convertToStringSlice(sundayAvailableTimeSlice)
 	mondayAvailableTime := convertToStringSlice(mondayAvailableTimeSlice)
 	tuesdayAvailableTime := convertToStringSlice(tuesdayAvailableTimeSlice)
@@ -167,12 +175,4 @@ func convertFields2Submission(fields map[string]interface{}) (*Submission, error
 		isNewAssistant:          isNewAssistant,
 		availableTime:           availableTime,
 	}, nil
-}
-
-func convertToStringSlice(slice []interface{}) []string {
-	strSlice := make([]string, len(slice))
-	for i, v := range slice {
-		strSlice[i], _ = v.(string)
-	}
-	return strSlice
 }
