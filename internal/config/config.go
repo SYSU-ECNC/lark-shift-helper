@@ -8,8 +8,11 @@ import (
 )
 
 type Config struct {
-	APPID     string
-	APPSecret string
+	APPID           string
+	APPSecret       string
+	APPToken        string
+	TableID         string
+	UserAccessToken string
 }
 
 func NewConfig() *Config {
@@ -19,8 +22,11 @@ func NewConfig() *Config {
 func (cfg *Config) Parse() {
 	cfg.APPID = os.Getenv("APP_ID")
 	cfg.APPSecret = os.Getenv("APP_SECRET")
+	cfg.APPToken = os.Getenv("APP_TOKEN")
+	cfg.TableID = os.Getenv("TABLE_ID")
+	cfg.UserAccessToken = os.Getenv("USER_ACCESS_TOKEN")
 
-	if cfg.APPID == "" || cfg.APPSecret == "" {
+	if cfg.APPID == "" || cfg.APPSecret == "" || cfg.APPToken == "" || cfg.TableID == "" || cfg.UserAccessToken == "" {
 		fmt.Println("Error: APP ID and APP Secret are required")
 		os.Exit(1)
 	}
