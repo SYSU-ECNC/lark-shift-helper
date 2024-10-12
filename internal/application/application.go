@@ -2,6 +2,7 @@ package application
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/SYSU-ECNC/lark-shift-helper/internal/config"
 )
@@ -17,6 +18,11 @@ func NewApplication(cfg *config.Config) *Application {
 }
 
 func (app *Application) Run() {
-	fmt.Println("APP ID:", app.cfg.APPID)
-	fmt.Println("APP Secret:", app.cfg.APPSecret)
+	data, err := app.getSubmissions()
+	if err != nil {
+		fmt.Println("getSubmissions error:", err)
+		os.Exit(1)
+	}
+
+	fmt.Printf("%+v\n", data)
 }
