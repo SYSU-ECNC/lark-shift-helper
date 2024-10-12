@@ -2,7 +2,7 @@ package application
 
 import "fmt"
 
-func (app *Application) getAvailableAssistant(submissions []*Submission) ([5][7][]string, error) {
+func (app *Application) getAvailableAssistants(submissions []*Submission) ([5][7][]string, error) {
 	availableAssistant := [5][7][]string{}
 
 	convertTimeSlot2number := func(timeSlot string) (int, error) {
