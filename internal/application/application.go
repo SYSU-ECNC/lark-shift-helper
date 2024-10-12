@@ -30,7 +30,11 @@ func (app *Application) Run() {
 		os.Exit(1)
 	}
 
-	for _, submission := range submissions {
-		fmt.Println(submission)
+	availableAssistants, err := app.getAvailableAssistant(submissions)
+	if err != nil {
+		fmt.Println("getAvailableAssistant error:", err)
+		os.Exit(1)
 	}
+
+	fmt.Println(availableAssistants)
 }
