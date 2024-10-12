@@ -24,5 +24,13 @@ func (app *Application) Run() {
 		os.Exit(1)
 	}
 
-	fmt.Printf("%+v\n", data)
+	submissions, err := convertSubmissionsJSON(data)
+	if err != nil {
+		fmt.Println("convertSubmissionJSON error:", err)
+		os.Exit(1)
+	}
+
+	for _, submission := range submissions {
+		fmt.Println(submission)
+	}
 }
