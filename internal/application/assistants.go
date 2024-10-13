@@ -1,7 +1,6 @@
 package application
 
-type User struct {
-	name                    string
+type Detail struct {
 	isAvailableForFieldWork bool
 	isEligibleAsLeader      bool
 	isNewAssistant          bool
@@ -9,8 +8,8 @@ type User struct {
 	assignedTimeSlotCnt     int
 }
 
-func (app *Application) getUsersFromSubmissions(submissions []*Submission) ([]*User, error) {
-	users := []*User{}
+func (app *Application) getAssistantsDetailMapFromSubmissions(submissions []*Submission) (map[string]Detail, error) {
+	assistantsDetailMap := map[string]Detail{}
 
 	getTimeSlotCntFromAvailableTime := func(availableTime [7][]string) int {
 		cnt := 0
@@ -21,17 +20,14 @@ func (app *Application) getUsersFromSubmissions(submissions []*Submission) ([]*U
 	}
 
 	for _, submission := range submissions {
-		user := &User{
-			name:                    submission.name,
+		assistantsDetailMap[submission.name] = Detail{
 			isAvailableForFieldWork: submission.isAvailableForFieldWork,
 			isEligibleAsLeader:      submission.isEligibleAsLeader,
 			isNewAssistant:          submission.isNewAssistant,
 			availableTimeSlotCnt:    getTimeSlotCntFromAvailableTime(submission.availableTime),
 			assignedTimeSlotCnt:     0,
 		}
-
-		users = append(users, user)
 	}
 
-	return users, nil
+	return assistantsDetailMap, nil
 }
